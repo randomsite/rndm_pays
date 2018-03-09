@@ -11,7 +11,7 @@
     <div class="container">
       <div class="top-line">
         <img src="assets/img/rndm.png" alt="">
-        <button @click="showForm()">Add New</button>
+        <button @click="add()">Add New</button>
       </div>
     </div>
   </header>
@@ -29,39 +29,32 @@
           <th>Pay</th>
           <th>Price</th>
           <th>Edit</th>
+          <th>Del</th>
         </tr>
         </thead>
         <tbody>
-        <tr v-if="addNew">
-          <td><input type="text" class="date"></td>
-          <td><input type="text" class="date"></td>
-          <td><input type="text"></td>
-          <td><span @click="switchWork()"></span></td>
-          <td><span @click="switchDone()"></span></td>
-          <td><span @click="switchPay()" ></span></td>
-          <td><input type="text"></td>
-          <td @click="add()">Save</td>
-        </tr>
 
         <tr v-for="project of projects" :key="project['.key']" v-if="project.is_edit">
           <td><input type="text" class="date" v-model="project.date_start"></td>
           <td><input type="text" class="date" v-model="project.date_end"></td>
           <td><input type="text" v-model="project.site"></td>
-          <td><span @click="switchWork(index)" :class="{'is-ok': project.is_work, 'is-no': !project.is_work }"></span></td>
-          <td><span @click="switchDone(index)" :class="{'is-ok': project.is_done, 'is-no': !project.is_done }"></span></td>
-          <td><span @click="switchPay(index)" :class="{'is-ok': project.is_pay, 'is-no': !project.is_pay }"></span></td>
+          <td><span @click="switchStatus(project, 'is_work')" :class="{'is-ok': project.is_work, 'is-no': !project.is_work }"></span></td>
+          <td><span @click="switchStatus(project, 'is_done')" :class="{'is-ok': project.is_done, 'is-no': !project.is_done }"></span></td>
+          <td><span @click="switchStatus(project, 'is_pay')" :class="{'is-ok': project.is_pay, 'is-no': !project.is_pay }"></span></td>
           <td><input type="text" v-model="project.price"></td>
-          <td @click="save(index)">Save</td>
+          <td @click="save(project, true)">Save</td>
+          <td @click="removeProject(project)">X</td>
         </tr>
         <tr v-else>
           <td>{{project.date_start}}</td>
           <td>{{project.date_end}}</td>
           <td>{{project.site}}</td>
-          <td><span @click="switchWork(index)" :class="{'is-ok': project.is_work, 'is-no': !project.is_work }"></span></td>
-          <td><span @click="switchDone(index)" :class="{'is-ok': project.is_done, 'is-no': !project.is_done }"></span></td>
-          <td><span @click="switchPay(index)" :class="{'is-ok': project.is_pay, 'is-no': !project.is_pay }"></span></td>
+          <td><span @click="switchStatus(project, 'is_work')" :class="{'is-ok': project.is_work, 'is-no': !project.is_work }"></span></td>
+          <td><span @click="switchStatus(project, 'is_done')" :class="{'is-ok': project.is_done, 'is-no': !project.is_done }"></span></td>
+          <td><span @click="switchStatus(project, 'is_pay')" :class="{'is-ok': project.is_pay, 'is-no': !project.is_pay }"></span></td>
           <td>{{project.price}}</td>
-          <td @click="edit(index)">Edit</td>
+          <td @click="edit(project)">Edit</td>
+          <td @click="removeProject(project)">X</td>
         </tr>
         </tbody>
       </table>

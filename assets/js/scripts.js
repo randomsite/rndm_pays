@@ -11,20 +11,17 @@ firebase.initializeApp(config);
 
 //Создаем таблицу в firebase
 var projectsRef = firebase.database().ref('projects');
-console.log(projectsRef)
 
 var app = new Vue({
     el: '#app',
     data: {
-        greeting: 'Welcome to your Vue.js app!',
-        addNew: false,
         projects: {}
     },
     firebase: {
         projects: projectsRef
     },
     methods: {
-        add: function (id) {
+        add: function (project) {
             projectsRef.push({
                 'completed': false,
                 'date_start': '',
@@ -36,53 +33,37 @@ var app = new Vue({
                 'price': 0,
                 'is_edit': true,
             });
-
         },
-        save: function (id) {
-            projectsRef.push({
-                'completed': projects[id].completed,
-                'date_start': projects[id].date_start,
-                'date_end': projects[id].date_end,
-                'site': projects[id].site,
-                'is_work': projects[id].is_work,
-                'is_done': projects[id].is_done,
-                'is_pay': projects[id].is_pay,
-                'price': projects[id].price,
-                'is_edit': projects[id].is_edit,
+        save: function (project, autosave) {
+            projectsRef.child(project['.key']).update({
+                'date_start': project.date_start,
+                'date_end': project.date_end,
+                'site': project.site,
+                'is_work': project.is_work,
+                'is_done': project.is_done,
+                'is_pay': project.is_pay,
+                'price': project.price,
+                'is_edit': project.is_edit,
             });
-            projects[id].is_edit = false;
+
+            if(autosave) {   projectsRef.child(project['.key']).update({is_edit: false}); }
+
 
         },
-        edit: function (id) {
-            projects[id].is_edit = true;
+        removeProject: function (project) {
+            projectsRef.child(project['.key']).remove()
         },
-        switchWork: function (id) {
+        edit: function (project) {
+            projectsRef.child(project['.key']).update({is_edit: true})
+        },
+        switchStatus: function (project, field_key) {
             if (event.target.classList.contains('is-ok')) {
-                projects[id].is_work = false;
+                project[field_key] = false;
             } else {
-                projects[id].is_work = true;
+                project[field_key] = true;
             }
-            save();
-        },
-        switchDone: function (id) {
-            if (event.target.classList.contains('is-ok')) {
-                projects[id].is_done = false;
-            } else {
-                projects[id].is_done = true;
-            }
-            save();
-        },
-        switchPay: function (id) {
-            if (event.target.classList.contains('is-ok')) {
-                projects[id].is_pay = false;
-            } else {
-                projects[id].is_pay = true;
-            }
-            save();
-        },
-        showForm : function () {
-            this.addNew = true;
-        },
+            this.save(project, false);
+        }
 
     }
 });
