@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Vue</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <header class="header">
+    <div class="container">
+      <div class="top-line">
+        <img src="assets/img/rndm.png" alt="">
+        <button @click="showForm()">Add New</button>
+      </div>
+    </div>
+  </header>
+  <div class="content">
+    <div class="container">
+
+      <table>
+        <thead>
+        <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th>Project</th>
+          <th>Work</th>
+          <th>Done</th>
+          <th>Pay</th>
+          <th>Price</th>
+          <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-if="addNew">
+          <td><input type="text" class="date"></td>
+          <td><input type="text" class="date"></td>
+          <td><input type="text"></td>
+          <td><span @click="switchWork()"></span></td>
+          <td><span @click="switchDone()"></span></td>
+          <td><span @click="switchPay()" ></span></td>
+          <td><input type="text"></td>
+          <td @click="add()">Save</td>
+        </tr>
+
+        <tr v-for="project of projects" :key="project['.key']" v-if="project.is_edit">
+          <td><input type="text" class="date" v-model="project.date_start"></td>
+          <td><input type="text" class="date" v-model="project.date_end"></td>
+          <td><input type="text" v-model="project.site"></td>
+          <td><span @click="switchWork(index)" :class="{'is-ok': project.is_work, 'is-no': !project.is_work }"></span></td>
+          <td><span @click="switchDone(index)" :class="{'is-ok': project.is_done, 'is-no': !project.is_done }"></span></td>
+          <td><span @click="switchPay(index)" :class="{'is-ok': project.is_pay, 'is-no': !project.is_pay }"></span></td>
+          <td><input type="text" v-model="project.price"></td>
+          <td @click="save(index)">Save</td>
+        </tr>
+        <tr v-else>
+          <td>{{project.date_start}}</td>
+          <td>{{project.date_end}}</td>
+          <td>{{project.site}}</td>
+          <td><span @click="switchWork(index)" :class="{'is-ok': project.is_work, 'is-no': !project.is_work }"></span></td>
+          <td><span @click="switchDone(index)" :class="{'is-ok': project.is_done, 'is-no': !project.is_done }"></span></td>
+          <td><span @click="switchPay(index)" :class="{'is-ok': project.is_pay, 'is-no': !project.is_pay }"></span></td>
+          <td>{{project.price}}</td>
+          <td @click="edit(index)">Edit</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="copy">2018 &copy; RNDM</div>
+  </footer>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+<script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+<script src="assets/js/scripts.js"></script>
+</body>
+</html>

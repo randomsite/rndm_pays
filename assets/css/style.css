@@ -1,0 +1,158 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
+  background: linear-gradient(45deg, #a8b1de, #866c84);
+}
+.container {
+  width: 1140px;
+  margin: 0 auto;
+}
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  background-color: #3e464c;
+}
+.top-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.top-line img {
+  width: 40px;
+}
+
+.content {
+  padding: 20px 0;
+  flex-grow: 1;
+}
+
+.footer {
+  background-color: #3e464c;
+  text-align: center;
+  padding: 20px 0;
+}
+.copy {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+button {
+  display: block;
+  margin: 0;
+  padding: 0 15px;
+  background-color: #2856b6;
+  color: #fff;
+  font-weight: 500;
+  line-height: 40px;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(0,0,0,.23), 0 3px 10px rgba(0,0,0,.16);
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: box-shadow .28s cubic-bezier(.4,0,.2,1);
+  outline: 0!important;
+}
+button:hover {
+  background-color: #234ca1;
+  color: #fff;
+  text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+table {
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+table * {
+  position: relative;
+}
+table td, table th {
+  padding-left: 8px;
+}
+table thead tr {
+  height: 60px;
+  background: #36304a;
+}
+table tbody tr {
+  height: 50px;
+}
+table tr th:first-child,
+table tr td:first-child {
+  padding-left: 40px;
+}
+table tbody tr:last-child {
+  border: 0;
+}
+table td, table th {
+  text-align: left;
+}
+table td.l, table th.l {
+  text-align: right;
+}
+table td.c, table th.c {
+  text-align: center;
+}
+table td.r, table th.r {
+  text-align: center;
+}
+
+
+table th{
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+tbody tr {
+  font-size: 15px;
+  color: #808080;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+tbody tr:hover {
+  color: #555555;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+.is-ok,
+.is-no {
+  display: block;
+  width: 16px;
+  height: 15px;
+}
+.is-ok {
+  background: url("../img/ok.png") center center no-repeat;
+}
+.is-no {
+  background: url("../img/no.png") center center no-repeat;
+}
