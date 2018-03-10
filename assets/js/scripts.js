@@ -9,9 +9,10 @@ var config = {
 };
 firebase.initializeApp(config);
 
-//Создаем таблицу в firebase
+// Create a table in Firebase
 var projectsRef = firebase.database().ref('projects');
 
+// Initialize app
 var app = new Vue({
     el: '#app',
     data: {
@@ -21,7 +22,7 @@ var app = new Vue({
         projects: projectsRef
     },
     methods: {
-        add: function (project) {
+        addProject: function (project) {
             projectsRef.push({
                 'completed': false,
                 'date_start': '',
@@ -31,10 +32,10 @@ var app = new Vue({
                 'is_done': false,
                 'is_pay': false,
                 'price': 0,
-                'is_edit': true,
+                'is_edit': true
             });
         },
-        save: function (project, autosave) {
+        saveProject: function (project, autosave) {
             projectsRef.child(project['.key']).update({
                 'date_start': project.date_start,
                 'date_end': project.date_end,
@@ -48,21 +49,25 @@ var app = new Vue({
 
             if(autosave) {   projectsRef.child(project['.key']).update({is_edit: false}); }
 
-
+            if(project.is_work && project.is_done && project.is_pay) {
+                projectsRef.child(project['.key']).update({completed: true});
+            } else {
+                projectsRef.child(project['.key']).update({completed: false});
+            }
+        },
+        editProject: function (project) {
+            projectsRef.child(project['.key']).update({is_edit: true});
         },
         removeProject: function (project) {
             projectsRef.child(project['.key']).remove()
         },
-        edit: function (project) {
-            projectsRef.child(project['.key']).update({is_edit: true})
-        },
         switchStatus: function (project, field_key) {
-            if (event.target.classList.contains('is-ok')) {
+            if (event.target.classList.contains('fas')) {
                 project[field_key] = false;
             } else {
                 project[field_key] = true;
             }
-            this.save(project, false);
+            this.saveProject(project, false);
         }
 
     }
